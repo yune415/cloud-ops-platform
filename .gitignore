@@ -1,0 +1,6 @@
+*.log
+*.pid
+*.swp
+backup/*.sql
+backup/*.sql.gz
+.env
