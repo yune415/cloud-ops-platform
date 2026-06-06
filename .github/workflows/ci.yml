@@ -1,0 +1,35 @@
+name: CI - 代码检查与安全扫描
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 检查硬编码密钥
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 检查 Shell 脚本语法
+        run: |
+          sudo apt-get install shellcheck
+          find . -name "*.sh" -exec shellcheck {} \;
+
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 检查 YAML 文件格式
+        run: |
+          find . -name "*.yml" -o -name "*.yaml" | xargs -I {} yamllint {}
