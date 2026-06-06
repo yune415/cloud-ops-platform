@@ -11,18 +11,11 @@
 - Ansible
 - GitHub Actions + OIDC + Gitleaks
 
-## 快速访问（示例环境）
-| 服务 | 地址 |
-|---|---|
-| Nginx | http://8.147.70.48 |
-| Prometheus | http://8.147.70.48:9090 |
-| Grafana | http://8.147.70.48:3000 |
-
 ## 项目结构
 cloud-ops-platform/
 ├── README.md
-├── docs/ # 架构图、SOP文档
-├── scripts/ # 备份脚本、健康检查
-├── ansible/ # Playbook
+├── scripts/ # 备份脚本
 ├── docker/ # docker-compose.yml
-└── monitoring/ # Prometheus配置
+├── ansible/ # Ansible Playbook
+├── monitoring/ # Prometheus配置
+└── docs/ # SOP文档

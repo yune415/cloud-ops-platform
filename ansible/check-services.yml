@@ -1,0 +1,40 @@
+---
+- name: 云原生运维平台 - 服务状态检查
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: 检查 Nginx 状态
+      service:
+        name: nginx
+        state: started
+      register: nginx_status
+      ignore_errors: yes
+
+    - name: 检查 MySQL 状态
+      service:
+        name: mysql
+        state: started
+      register: mysql_status
+      ignore_errors: yes
+
+    - name: 检查 Prometheus 状态
+      service:
+        name: prometheus
+        state: started
+      register: prometheus_status
+      ignore_errors: yes
+
+    - name: 检查 node_exporter 状态
+      service:
+        name: prometheus-node-exporter
+        state: started
+      register: node_exp_status
+      ignore_errors: yes
+
+    - name: 输出所有服务状态
+      debug:
+        msg:
+          - "Nginx: {{ 'running' if nginx_status.status.ActiveState == 'active' else 'stopped' }}"
+          - "MySQL: {{ 'running' if mysql_status.status.ActiveState == 'active' else 'stopped' }}"
+          - "Prometheus: {{ 'running' if prometheus_status.status.ActiveState == 'active' else 'stopped' }}"
+          - "Node Exporter: {{ 'running' if node_exp_status.status.ActiveState == 'active' else 'stopped' }}"
